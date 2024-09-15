@@ -18,7 +18,7 @@ redirect_from:
 <span class='anchor' id='about-me'></span>
 
 I am Qijie Wang, a first-year master's student at the School of Software, Tsinghua University, under the supervision of Associate Professor Bin Wang. I graduated with a bachelor's degree from the School of Software, Tsinghua University. As the first author, I have published one academic paper.
-<a href='https://scholar.google.com/citations?user=voN01s0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=Cites"></a>。
+<a href='https://scholar.google.com/citations?user=voN01s0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>
 
 
 My research areas include: Computer Vision, AIGC, and Multimodal Learning.
