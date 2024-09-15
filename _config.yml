@@ -9,7 +9,7 @@
 title                    : "Qijie Wang"
 description              : "First-year M.S. student with research interests in computer vision, AIGC, and multimodality."
 repository               : ""
-google_scholar_stats_use_cdn : true
+google_scholar_stats_use_cdn : false
 
 # google analytics
 google_analytics_id      :  # get google_analytics_id from https://analytics.google.com/analytics/
