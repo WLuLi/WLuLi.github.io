@@ -40,6 +40,10 @@ My research areas include: 3D Vision, AIGC.
 -	**Qijie Wang**$^†$, Guandu Liu$^†$, Bin Wang. (2024). CapS-Adapter: Caption-based MultiModal Adapter in Zero-Shot Classification
 [[Paper]](https://arxiv.org/abs/2405.16591) [[Code]](https://github.com/WLuLi/CapS-Adapter)
 
+</div>
+</div>
+
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">IJCAI 2025</div><img src='images/tss_2025.svg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 -	Rui Qin$^†$, **Qijie Wang**$^†$, Ming Sun, Haowei Zhu, Chao Zhou, Bin Wang (2025). Accelerating Diffusion-based Super-Resolution with Dynamic Time-Spatial Sampling
