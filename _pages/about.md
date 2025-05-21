@@ -37,7 +37,8 @@ My research areas include: 3D Vision, AIGC.
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ACMMM 2024</div><img src='images/caps_adapter2024.svg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
--	**Qijie Wang**$^†$, Guandu Liu$^†$, Bin Wang. (2024). CapS-Adapter: Caption-based MultiModal Adapter in Zero-Shot Classification
+-	**Qijie Wang**$^†$, Guandu Liu$^†$, Bin Wang. (2024).  
+CapS-Adapter: Caption-based MultiModal Adapter in Zero-Shot Classification  
 [[Paper]](https://arxiv.org/abs/2405.16591) [[Code]](https://github.com/WLuLi/CapS-Adapter)
 
 </div>
@@ -46,7 +47,8 @@ My research areas include: 3D Vision, AIGC.
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">IJCAI 2025</div><img src='images/tss_2025.svg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
--	Rui Qin$^†$, **Qijie Wang**$^†$, Ming Sun, Haowei Zhu, Chao Zhou, Bin Wang (2025). Accelerating Diffusion-based Super-Resolution with Dynamic Time-Spatial Sampling
+-	Rui Qin$^†$, **Qijie Wang**$^†$, Ming Sun, Haowei Zhu, Chao Zhou, Bin Wang (2025).  
+Accelerating Diffusion-based Super-Resolution with Dynamic Time-Spatial Sampling  
 [[Paper]](https://arxiv.org/abs/2505.12048)
 
 </div>
@@ -76,6 +78,6 @@ My research areas include: 3D Vision, AIGC.
   - Replicated LLaVA1.5, conducted OCR data synthesis and filtering, fine-tuned multimodal large models, and tested them on multiple benchmarks
 
 - **Kuaishou Technology**
-  *Internship Focus: Generative AI Research*
-  *Nov. 2024 - Present*
+  *Internship Focus: Generative AI Research*  
+  *Nov. 2024 - Present*  
   - Co-first author of the paper *Accelerating Diffusion-based Super-Resolution with Dynamic Time-Spatial Sampling*
