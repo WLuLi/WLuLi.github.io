@@ -21,7 +21,7 @@ I am Qijie Wang, a first-year master's student at the School of Software, Tsingh
 <a href='https://scholar.google.com/citations?user=voN01s0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>
 
 
-My research areas include: Computer Vision, AIGC, and Multimodal Learning.
+My research areas include: 3D Vision, AIGC.
 
 
 <span class='anchor' id='-xl'></span>
@@ -37,8 +37,11 @@ My research areas include: Computer Vision, AIGC, and Multimodal Learning.
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ACMMM 2024</div><img src='images/caps_adapter2024.svg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
--	**Wang, Q.**, Liu, G., & Wang, B. (2024). CapS-Adapter: Caption-based MultiModal Adapter in Zero-Shot Classification. https://arxiv.org/abs/2405.16591 
+-	**Qijie Wang**&dagger, Guandu Liu&dagger, Bin Wang. (2024). CapS-Adapter: Caption-based MultiModal Adapter in Zero-Shot Classification. https://arxiv.org/abs/2405.16591 
 [[Paper]](https://arxiv.org/abs/2405.16591) [[Code]](https://github.com/WLuLi/CapS-Adapter)
+
+-	Rui Qin&dagger, **Qijie Wang**&dagger, Ming Sun, Haowei Zhu, Chao Zhou, Bin Wang (2025). Accelerating Diffusion-based Super-Resolution with Dynamic Time-Spatial Sampling https://arxiv.org/abs/2505.12048 
+[[Paper]](https://arxiv.org/abs/2505.12048)
 
 </div>
 </div>
@@ -65,3 +68,8 @@ My research areas include: Computer Vision, AIGC, and Multimodal Learning.
   *Internship Focus: Multimodal Large Model Algorithms Intern*  
   *Oct. 2023 - Jan. 2024*  
   - Replicated LLaVA1.5, conducted OCR data synthesis and filtering, fine-tuned multimodal large models, and tested them on multiple benchmarks
+
+- **Kuaishou Technology**
+  *Internship Focus: Generative AI Research*
+  *Nov. 2024 - Present*
+  - Co-first author of the paper *Accelerating Diffusion-based Super-Resolution with Dynamic Time-Spatial Sampling*
