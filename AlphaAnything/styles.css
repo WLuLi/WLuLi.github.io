@@ -27,3 +27,7 @@
 .wordmark-red{color:#d84e5f}
 .wordmark-green{color:#388a50}
 .wordmark-blue{color:#367fbd}
+/* Title palette follows the current paper PDF. */
+.title-name .wordmark-alpha{color:rgb(45% 45% 45%)}
+.title-name .wordmark-gradient{display:inline-block;color:rgb(16% 40% 80%);background:linear-gradient(90deg,rgb(84% 22% 27%) 0%,rgb(15% 62% 35%) 50%,rgb(16% 40% 80%) 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.title-sub{color:rgb(9% 9% 9%)}

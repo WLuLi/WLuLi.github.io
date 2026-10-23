@@ -3,7 +3,12 @@
 .paper-authors sup { margin-left: 2px; font-size: 10px; color: var(--muted); }
 .paper-affiliations, .author-notes { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 10px; }
 .paper-affiliations { font-size: 14px; color: var(--copy); }
+.hero .paper-affiliations { margin-bottom: 24px; }
 .author-notes { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+.footer-author-notes { max-width: var(--max); margin: 24px auto 0; padding-top: 20px; border-top: 1px solid var(--line); }
+.footer-author-notes .author-notes { justify-content: flex-start; text-align: left; margin-bottom: 6px; }
+.footer-author-notes .author-notes:last-child { margin-bottom: 0; }
+.footer-author-notes .author-notes > span { white-space: normal; }
 .citation-block { margin-top: 42px; }
 .citation-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 .citation-heading h3 { margin: 0; }
