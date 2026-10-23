@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafbff">
+  <meta name="description" content="AlphaAnything: Extending Pretrained RGB Generators to RGBA. Joint appearance and opacity modeling through generative training alone in the original RGB latent space, with text-to-RGBA and image-to-RGBA examples.">
+  <title>AlphaAnything — Extending Pretrained RGB Generators to RGBA</title>
+  <link rel="canonical" href="https://wluli.github.io/AlphaAnything/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AlphaAnything">
+  <meta property="og:title" content="AlphaAnything: Extending Pretrained RGB Generators to RGBA">
+  <meta property="og:description" content="Appearance and opacity, learned together. Explore text-to-RGBA, image-to-RGBA, and interactive layer compositions.">
+  <meta property="og:url" content="https://wluli.github.io/AlphaAnything/">
+  <meta property="og:image" content="https://wluli.github.io/AlphaAnything/assets/teaser.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AlphaAnything: Extending Pretrained RGB Generators to RGBA">
+  <meta name="twitter:description" content="Extend pretrained RGB generators to transparent RGBA layers in their original latent space.">
+  <meta name="twitter:image" content="https://wluli.github.io/AlphaAnything/assets/teaser.webp">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="composition-studio.css">
+  <link rel="stylesheet" href="release.css">
+  <script src="demos.js" defer></script>
+  <script src="compositions.js" defer></script>
+  <script src="decompositions.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="layer-editor.js" defer></script>
+  <script src="composition-studio.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#abstract">Skip to content</a>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="AlphaAnything home"><span class="brand-mark" aria-hidden="true">α</span><span class="wordmark"><span class="wordmark-alpha">Alpha</span><span class="wordmark-red">Any</span><span class="wordmark-green">th</span><span class="wordmark-blue">ing</span></span></a>
+      <button class="menu-button" id="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><span data-icon="menu"></span></button>
+      <div class="nav-links" id="nav-links">
+        <a href="#abstract">Abstract</a><a href="#i2rgba">Image-to-RGBA</a><a href="#t2rgba">Text-to-RGBA</a><a href="#compositions">Compositions</a><a href="#decompositions">Decompose</a><a href="#method">Method</a><a href="#resources">Resources</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-badge"><span data-icon="layers"></span>RGBA Generation</div>
+      <h1><span class="title-name"><span class="wordmark"><span class="wordmark-alpha">Alpha</span><span class="wordmark-red">Any</span><span class="wordmark-green">th</span><span class="wordmark-blue">ing</span></span></span><span class="title-sub">Extending Pretrained RGB Generators to RGBA</span></h1>
+      <div class="paper-authors" aria-label="Authors">
+        <span><a href="mailto:wqj24@mails.tsinghua.edu.cn">Qijie Wang</a><sup>1,2,*,‡</sup></span>
+        <span>Zhixin Xu<sup>2,*</sup></span>
+        <span>Zhe Li<sup>3,2</sup></span>
+        <span>Haowei Zhu<sup>1</sup></span>
+        <span>Honghao Qiao<sup>2</sup></span>
+        <span>Bo Peng<sup>2</sup></span>
+        <span>Dawei Li<sup>2,†</sup></span>
+        <span>Bin Wang<sup>1,†</sup></span>
+      </div>
+      <p class="paper-affiliations"><span><sup>1</sup> Tsinghua University</span><span><sup>2</sup> ByteDance</span><span><sup>3</sup> Peking University</span></p>
+      <p class="author-notes"><span><sup>*</sup> Equal contribution</span><span><sup>†</sup> Corresponding authors</span></p>
+      <p class="author-notes internship-note"><span><sup>‡</sup> Work done during an internship at ByteDance.</span></p>
+      <p class="publication-status">Preprint forthcoming</p>
+      <p class="hero-tagline">Appearance and opacity, learned together.</p>
+      <div class="hero-tags"><span>Pretrained RGB backbones</span><span>Generative training only</span><span>Native RGBA output</span></div>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#i2rgba"><span data-icon="image"></span>Explore demos</a>
+        <span class="button button-status"><span data-icon="github"></span>Code <span class="soon-label">Coming soon</span></span>
+        <span class="button button-status"><span data-icon="paper"></span>arXiv <span class="soon-label">Coming soon</span></span>
+      </div>
+      <figure class="teaser-figure">
+        <button class="figure-button" data-figure="teaser" aria-label="Enlarge the AlphaAnything teaser">
+          <img src="assets/teaser.webp" width="1920" height="1080" alt="AlphaAnything teaser: transparent animals, flowers, glass, fabrics, and graphic layers arranged around the project title." fetchpriority="high">
+          <span class="enlarge-badge"><span data-icon="expand"></span>Enlarge</span>
+        </button>
+        <figcaption>All assets in this figure are generated or extracted by <span class="wordmark"><span class="wordmark-alpha">Alpha</span><span class="wordmark-red">Any</span><span class="wordmark-green">th</span><span class="wordmark-blue">ing</span></span>, including the title. The elements are manually arranged into the final composition.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <main>
+    <section class="section abstract-section" id="abstract" aria-labelledby="abstract-title">
+      <div class="section-heading"><span class="section-kicker">Abstract</span><h2 id="abstract-title">From pretrained RGB to RGBA</h2></div>
+      <div class="abstract-copy">
+        <p>Existing RGBA generation methods commonly learn a transparency-specific representation through reconstruction, introducing an additional training stage and potentially altering the RGB decoding function inherited from pretrained models. We present <strong>AlphaAnything</strong>, a lightweight framework that extends pretrained RGB generators to RGBA directly in their original latent space, without RGBA reconstruction pretraining. AlphaAnything inserts LoRA modules into the generative transformer and attaches an alpha branch to the frozen RGB VAE decoder. Unidirectional RGB-to-alpha feature sharing allows opacity supervision to shape the generative latent while guaranteeing that, for any fixed latent, RGB decoding remains identical to that of the pretrained decoder. We further introduce <strong>Endpoint-Aware Alpha Loss (EA Loss)</strong>, which derives opacity supervision from the complementary foreground–background weights used in compositing. It supports exact opacity endpoints and continuous partial transparency while emphasizing localized alpha errors. Experiments on text-to-RGBA and image-to-RGBA tasks across multiple pretrained RGB backbones demonstrate competitive generation quality, and controlled ablations validate the shared-latent training design and EA Loss.</p>
+      </div>
+    </section>
+
+    <div class="section-band">
+      <section class="section demo-section" id="i2rgba" aria-labelledby="i2-title">
+        <div class="section-heading"><span class="section-kicker">01 / Image-to-RGBA</span><h2 id="i2-title">From a scene to a layer</h2><p>Select an example to inspect its extraction prompt, and drag the divider to compare the input with the extracted RGBA output.</p></div>
+        <div class="demo-shell">
+          <div class="demo-toolbar">
+            <div class="example-heading"><span class="mini-icon" data-icon="image"></span><strong id="i2-name">Cocktail glass</strong><span id="i2-detail" class="detail-tag">Transparent glass</span></div>
+            <div class="background-picker" role="group" aria-label="Image-to-RGBA background"><span>Background</span><button class="swatch checker active" data-bg-group="i2" data-bg="checker" aria-label="Checkerboard background" aria-pressed="true"></button><button class="swatch white" data-bg-group="i2" data-bg="white" aria-label="White background" aria-pressed="false"></button><button class="swatch dark" data-bg-group="i2" data-bg="dark" aria-label="Dark background" aria-pressed="false"></button><button class="swatch blue" data-bg-group="i2" data-bg="blue" aria-label="Blue background" aria-pressed="false"></button></div>
+          </div>
+          <div class="comparison-grid">
+            <figure class="comparison-figure">
+              <div class="comparison-stage" id="comparison" style="--split:44%">
+                <div class="comparison-input"><img id="i2-input" src="assets/decompositions/01_cocktail_glass/final/inputOriginal.webp" alt="Input image for extracting the cocktail glass; QR and platform marks locally blurred" loading="lazy" draggable="false"></div>
+                <div class="comparison-output transparency-surface" id="i2-output-surface" data-background="checker"><img id="i2-output" src="assets/i2rgba/cocktail-rgba.webp" alt="Predicted transparent cocktail glass layer" loading="lazy" draggable="false"></div>
+                <div class="comparison-label input-label" aria-hidden="true">Input RGB</div><div class="comparison-label output-label" aria-hidden="true">Output RGBA</div>
+                <div class="comparison-divider" aria-hidden="true"><span><span data-icon="compare"></span></span></div>
+                <input type="range" id="compare-slider" min="0" max="100" value="44" aria-label="Compare input RGB and output RGBA" aria-valuetext="44% input RGB, 56% output RGBA">
+                <span class="comparison-help" aria-hidden="true"><span data-icon="move"></span>Drag to compare</span>
+              </div>
+              <figcaption>Input RGB <span data-icon="arrow-right"></span> <span class="wordmark"><span class="wordmark-alpha">Alpha</span><span class="wordmark-red">Any</span><span class="wordmark-green">th</span><span class="wordmark-blue">ing</span></span> <span class="backbone-label">Qwen-Image-Edit</span></figcaption>
+            </figure>
+            <figure class="alpha-figure">
+              <div class="alpha-stage"><span class="comparison-label alpha-label">Predicted alpha</span><img id="i2-alpha" src="assets/i2rgba/cocktail-alpha.webp" alt="Predicted opacity of the cocktail glass, from black for transparent to white for opaque" loading="lazy"></div>
+              <figcaption><span>Transparent</span><span class="alpha-ramp" aria-hidden="true"></span><span>Opaque</span></figcaption>
+            </figure>
+          </div>
+          <div class="prompt-box"><span class="prompt-label"><span data-icon="quote"></span>Prompt</span><p id="i2-prompt">Extract the object described by the text, preserving fine details and transparency: A clear long-stemmed glass holds a coral-red cocktail with large ice cubes and an orange slice. Bright reflections run down its rounded bowl and slender stem to the oval glass foot.</p></div>
+          <div id="i2-examples" class="example-strip" role="group" aria-label="Choose an image-to-RGBA example"></div>
+        </div>
+        <p class="section-footnote">Selected inference results. The original RGBA colors and alpha are retained; the background is for visualization. QR and platform marks in the cocktail input are locally blurred.</p>
+      </section>
+    </div>
+
+    <section class="section demo-section" id="t2rgba" aria-labelledby="t2-title">
+      <div class="section-heading"><span class="section-kicker">02 / Text-to-RGBA</span><h2 id="t2-title">Imagine it. Generate the layer.</h2><p>Glass, fabric, feathers, and more. Select a result to inspect its generation prompt and alpha channel.</p></div>
+      <div class="gallery-toolbar">
+        <div class="segmented" role="group" aria-label="Text-to-RGBA display mode"><button data-t2-mode="rgba" class="active" aria-pressed="true">RGBA</button><button data-t2-mode="alpha" aria-pressed="false">Alpha</button></div>
+        <span class="gallery-backbone"><span class="wordmark"><span class="wordmark-alpha">Alpha</span><span class="wordmark-red">Any</span><span class="wordmark-green">th</span><span class="wordmark-blue">ing</span></span> · Qwen-Image</span>
+        <div class="background-picker" role="group" aria-label="Text-to-RGBA background"><span>Background</span><button class="swatch checker active" data-bg-group="t2" data-bg="checker" aria-label="Checkerboard background" aria-pressed="true"></button><button class="swatch white" data-bg-group="t2" data-bg="white" aria-label="White background" aria-pressed="false"></button><button class="swatch dark" data-bg-group="t2" data-bg="dark" aria-label="Dark background" aria-pressed="false"></button><button class="swatch blue" data-bg-group="t2" data-bg="blue" aria-label="Blue background" aria-pressed="false"></button></div>
+      </div>
+      <div id="t2-gallery" class="generation-gallery"></div>
+      <noscript><p>The interactive demos require JavaScript. Example RGBA layers:</p><div class="generation-gallery"><img src="assets/t2rgba/glasswing-rgba.webp" alt="Glasswing butterfly"><img src="assets/t2rgba/cherries-rgba.webp" alt="Wrapped cherries"><img src="assets/t2rgba/parasol-rgba.webp" alt="Lace parasol"></div></noscript>
+    </section>
+
+    <section class="section composition-section" id="compositions" aria-labelledby="composition-title">
+      <div class="section-heading"><span class="section-kicker">03 / Layer composition</span><h2 id="composition-title">One idea. Many layers. A finished scene.</h2><p>AlphaAnything generates individual RGBA elements, which are then manually arranged into a composition. Drag to explore the stack in 3D, replay the build, and inspect the layers behind each result.</p></div>
+      <div class="composition-studio" id="composition-studio" data-view="composed">
+        <div class="studio-toolbar">
+          <div class="studio-identity"><span class="studio-live-dot" aria-hidden="true"></span><span><strong id="composition-name">Layer composition</strong><small id="composition-subtitle">Explore the generated layers</small></span></div>
+          <div class="studio-view-tabs" role="group" aria-label="Composition view"><button type="button" data-composition-view="composed" aria-pressed="true" class="active">Composed</button><button type="button" data-composition-view="exploded" aria-pressed="false">Exploded</button></div>
+          <a class="studio-open" id="composition-original" href="assets/compositions/10_ink_cranes/final/final.webp" target="_blank" rel="noopener" aria-label="Open the full-resolution composition"><span data-icon="expand"></span><span>Full image</span></a>
+        </div>
+        <div class="studio-workspace">
+          <div class="studio-stage-column">
+            <div class="composition-stage" id="composition-stage" tabindex="0" role="region" aria-roledescription="3D layer viewer" aria-describedby="composition-gesture-help" aria-label="Interactive layered composition" aria-busy="false">
+              <div class="studio-stage-grid" aria-hidden="true"></div>
+              <div class="stage-coordinate stage-coordinate-top" aria-hidden="true">RGBA → COMPOSITION</div>
+              <div class="stage-coordinate stage-coordinate-bottom" id="composition-dimensions" aria-hidden="true">1122 × 1402</div>
+              <div class="composition-world" id="composition-world"><div class="composition-canvas" id="composition-canvas"><img id="composition-fallback" class="composition-fallback" alt="Completed layered composition" loading="lazy"><div id="composition-planes" class="composition-planes"></div></div></div>
+              <span class="studio-loading" id="composition-loading" role="status" hidden>Loading the layers…</span>
+              <div class="stage-hint" id="composition-hint">Replay to watch the scene come together</div>
+            </div>
+            <p class="sr-only" id="composition-gesture-help">Drag to rotate the layers. Use arrow keys to rotate, plus and minus to zoom, and Home to reset the view. Double-click to reset. On a touchscreen, drag sideways to rotate or swipe vertically to scroll the page.</p>
+            <div class="studio-camera-controls" role="group" aria-label="3D view controls">
+              <div class="studio-spread-control"><div><label for="composition-spread">Layer spacing</label><output id="composition-spread-value" for="composition-spread">100%</output></div><input id="composition-spread" type="range" min="0" max="180" value="100" step="1" disabled></div>
+              <div class="studio-zoom-control" role="group" aria-label="Zoom"><button type="button" id="composition-zoom-out" aria-label="Zoom out" disabled>−</button><output id="composition-zoom-value" aria-label="Zoom level">100%</output><button type="button" id="composition-zoom-in" aria-label="Zoom in" disabled>+</button></div>
+              <button type="button" id="composition-orbit" class="studio-camera-button" aria-pressed="false" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/><path d="m17 3 3 1-1 3"/></svg><span>Auto orbit</span></button>
+              <button type="button" id="composition-reset" class="studio-camera-button" aria-label="Reset rotation, spacing and zoom" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg><span>Reset view</span></button>
+            </div>
+            <div class="studio-timeline">
+              <button type="button" id="composition-play" class="studio-play" aria-label="Replay the layer composition" disabled><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg><span>Replay</span></button>
+              <div class="build-control"><div class="build-label"><label for="composition-progress">Build the scene</label><output id="composition-count" for="composition-progress">26 / 26 layers</output></div><input id="composition-progress" type="range" min="0" max="26" value="26" step="1" aria-label="Number of visible layers" disabled></div>
+            </div>
+          </div>
+          <aside class="studio-inspector" aria-label="Layer inspector">
+            <div class="inspector-heading"><span>THE LAYERS</span><span id="composition-model">LongCat-Image</span></div>
+            <div class="studio-layer-list" id="composition-layer-list" role="group" aria-label="Select a layer to inspect"></div>
+            <div class="layer-inspection">
+              <div class="layer-inspection-heading"><strong id="composition-layer-name">Select a layer</strong><div class="layer-channel-tabs" role="group" aria-label="Selected layer channel"><button type="button" data-composition-channel="rgba" aria-pressed="true" class="active">RGBA</button><button type="button" data-composition-channel="alpha" aria-pressed="false">Alpha</button></div></div>
+              <div class="native-layer-preview" id="composition-native-surface"><img id="composition-native" alt="Selected generated layer" loading="lazy"></div>
+              <div class="layer-inspection-footer"><span id="composition-layer-origin">Generated RGBA</span><button type="button" id="composition-isolate" aria-pressed="false" disabled>Isolate layer</button></div>
+              <details class="layer-prompt"><summary>Generation prompt</summary><p id="composition-layer-prompt"></p></details>
+            </div>
+          </aside>
+        </div>
+        <div class="studio-footer"><span id="composition-provenance">AlphaAnything RGBA elements · manually arranged composition</span><span id="composition-case-number">01 / 04</span></div>
+        <details class="studio-brief" id="composition-brief" hidden><summary>Starting idea &amp; reference</summary><div class="studio-brief-content"><a id="composition-reference-link" target="_blank" rel="noopener"><img id="composition-reference" alt="Imagegen visual reference" loading="lazy"><span>Imagegen reference</span></a><div><p id="composition-intent"></p><p class="studio-reference-note">A visual reference for the manually arranged scene. RGBA elements are generated with AlphaAnything; backgrounds from the original RGB backbone and solid-color canvases are identified separately.</p><details><summary>Reference prompt</summary><p id="composition-reference-prompt"></p></details></div></div></details>
+      </div>
+      <div class="composition-collection-bar"><span>CHOOSE A SCENE</span><span class="composition-rail-hint">Scroll to explore <span aria-hidden="true">↔</span></span></div>
+      <div class="composition-case-strip" id="composition-cases" role="group" aria-label="Choose a composition"></div>
+      <p class="section-footnote composition-footnote">The displayed stack contains the actual layers, manually arranged into each composition. Original generated alpha is retained; opaque backgrounds generated with the original RGB backbone and solid-color canvases are identified separately. AVENORIQ is a fictional name used in a generated example. Motion and perspective are viewing effects.</p>
+      <noscript><p>Enable JavaScript to explore the layers, or <a href="assets/compositions/10_ink_cranes/final/final.webp">view a completed composition</a>.</p></noscript>
+    </section>
+
+    <section class="section composition-section" id="decompositions" hidden aria-labelledby="decomposition-title">
+      <div class="section-heading"><span class="section-kicker">04 / Layer decomposition</span><h2 id="decomposition-title">From a single image to a layer stack.</h2><p>AlphaAnything extracts individual RGBA layers from a source image, using a separate prompt for each layer. The same source image is supplied to every extraction request. Compare the input with the recomposed scene, or inspect each layer on its own.</p></div>
+      <div class="composition-studio decomposition-studio" id="decomposition-studio" data-view="input">
+        <div class="studio-toolbar">
+          <div class="studio-identity"><span class="studio-live-dot" aria-hidden="true"></span><span><strong id="decomposition-name">Decompose</strong><small id="decomposition-subtitle">One source, multiple native RGBA layers</small></span></div>
+          <div class="studio-view-tabs" role="group" aria-label="Decomposition view"><button type="button" data-composition-view="input" aria-pressed="true" class="active">Input</button><button type="button" data-composition-view="exploded" aria-pressed="false">Layers</button><button type="button" data-composition-view="composed" aria-pressed="false">Recomposed</button></div>
+          <a class="studio-open" id="decomposition-original" target="_blank" rel="noopener" aria-label="Open the full-resolution input"><span data-icon="expand"></span><span>Full image</span></a>
+        </div>
+        <div class="studio-workspace">
+          <div class="studio-stage-column">
+            <div class="composition-stage" id="decomposition-stage" tabindex="0" role="region" aria-roledescription="3D layer viewer" aria-describedby="decomposition-gesture-help" aria-label="Interactive layered composition" aria-busy="false">
+              <div class="studio-stage-grid" aria-hidden="true"></div>
+              <div class="stage-coordinate stage-coordinate-top" aria-hidden="true" id="decomposition-source-id">RGBA-Image</div>
+              <div class="stage-coordinate stage-coordinate-bottom" id="decomposition-dimensions" aria-hidden="true"></div>
+              <div class="composition-world" id="decomposition-world"><div class="composition-canvas" id="decomposition-canvas"><img id="decomposition-fallback" class="composition-fallback" alt="Recomposed extracted layers" loading="lazy"><img id="decomposition-source" class="composition-source" alt="Original RGBA-Image source" loading="lazy" draggable="false"><div id="decomposition-planes" class="composition-planes"></div></div></div>
+              <span class="studio-loading" id="decomposition-loading" role="status" hidden>Loading the layers…</span>
+              <div class="stage-hint" id="decomposition-hint">Replay to reveal the extracted layers</div>
+            </div>
+            <p class="sr-only" id="decomposition-gesture-help">In Layers, drag to rotate the stack, use arrow keys to rotate, plus and minus to zoom, and Home to reset the view. In Recomposed, select a foreground layer and drag to move it. Use corners to resize, the top handle to rotate, arrow keys to move, plus and minus to resize, and bracket keys to rotate. Hold Shift with arrow keys for larger steps. Home resets the selected layer. Background stays fixed.</p>
+            <div class="studio-camera-controls" role="group" aria-label="3D view controls">
+              <div class="studio-spread-control"><div><label for="decomposition-spread">Layer spacing</label><output id="decomposition-spread-value" for="decomposition-spread">100%</output></div><input id="decomposition-spread" type="range" min="0" max="180" value="100" step="1" disabled></div>
+              <div class="studio-zoom-control" role="group" aria-label="Zoom"><button type="button" id="decomposition-zoom-out" aria-label="Zoom out" disabled>−</button><output id="decomposition-zoom-value" aria-label="Zoom level">100%</output><button type="button" id="decomposition-zoom-in" aria-label="Zoom in" disabled>+</button></div>
+              <button type="button" id="decomposition-orbit" class="studio-camera-button" aria-pressed="false" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/><path d="m17 3 3 1-1 3"/></svg><span>Auto orbit</span></button>
+              <button type="button" id="decomposition-reset" class="studio-camera-button" aria-label="Reset rotation, spacing and zoom" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg><span>Reset view</span></button>
+            </div>
+            <div class="studio-timeline">
+              <button type="button" id="decomposition-play" class="studio-play" aria-label="Replay the separation into extracted layers" disabled><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg><span>Replay split</span></button>
+              <div class="build-control"><div class="build-label"><label for="decomposition-progress">Visible layers</label><output id="decomposition-count" for="decomposition-progress"></output></div><input id="decomposition-progress" type="range" min="0" max="1" value="1" step="1" aria-label="Number of visible layers" disabled></div>
+            </div>
+          </div>
+          <aside class="studio-inspector" aria-label="Layer inspector">
+            <div class="inspector-heading"><span>THE LAYERS</span><span id="decomposition-model"></span></div>
+            <div class="studio-layer-list" id="decomposition-layer-list" role="group" aria-label="Select a layer to inspect"></div>
+            <div class="layer-inspection">
+              <div class="layer-inspection-heading"><strong id="decomposition-layer-name">Select a layer</strong><div class="layer-channel-tabs" role="group" aria-label="Selected layer channel"><button type="button" data-composition-channel="rgba" aria-pressed="true" class="active">RGBA</button><button type="button" data-composition-channel="alpha" aria-pressed="false">Alpha</button></div></div>
+              <div class="native-layer-preview" id="decomposition-native-surface"><img id="decomposition-native" alt="Selected generated layer" loading="lazy"></div>
+              <div class="layer-inspection-footer"><a id="decomposition-layer-original" target="_blank" rel="noopener"><span id="decomposition-layer-origin">Native RGBA</span> ↗</a><button type="button" id="decomposition-isolate" aria-pressed="false" disabled>Isolate layer</button></div>
+              <div class="layer-edit-controls" id="decomposition-edit-controls" hidden>
+                <span class="layer-edit-heading">EDIT LAYER</span>
+                <div class="layer-edit-range"><label for="decomposition-edit-rotation">Rotation</label><output id="decomposition-edit-rotation-value" for="decomposition-edit-rotation">0°</output><input id="decomposition-edit-rotation" type="range" min="-180" max="180" step="1" value="0" disabled></div>
+                <div class="layer-edit-range"><label for="decomposition-edit-scale">Scale</label><output id="decomposition-edit-scale-value" for="decomposition-edit-scale">100%</output><input id="decomposition-edit-scale" type="range" min="25" max="250" step="1" value="100" disabled></div>
+                <div class="layer-edit-actions"><button type="button" id="decomposition-edit-reset-layer" disabled>Reset layer</button><button type="button" id="decomposition-edit-reset-all" disabled>Reset all</button></div>
+                <p id="decomposition-edit-hint">Drag to move. Use the handles to rotate and resize.</p>
+              </div>
+              <details class="layer-prompt"><summary>Extraction prompt</summary><p id="decomposition-layer-prompt"></p></details>
+            </div>
+          </aside>
+        </div>
+        <div class="studio-footer"><span id="decomposition-provenance">Same source image · separate layer prompts · original canvas positions</span><span id="decomposition-case-number"></span></div>
+        <details class="studio-brief" id="decomposition-brief" hidden><summary>Starting idea &amp; reference</summary><div class="studio-brief-content"><a id="decomposition-reference-link" target="_blank" rel="noopener"><img id="decomposition-reference" alt="Imagegen visual reference" loading="lazy"><span>Imagegen reference</span></a><div><p id="decomposition-intent"></p><p class="studio-reference-note">Each requested RGBA layer is extracted from the same source image using a separate prompt.</p><details><summary>Reference prompt</summary><p id="decomposition-reference-prompt"></p></details></div></div></details>
+      </div>
+      <div class="composition-collection-bar"><span>CHOOSE AN INPUT</span><span class="composition-rail-hint">Scroll to explore <span aria-hidden="true">↔</span></span></div>
+      <div class="composition-case-strip" id="decomposition-cases" role="group" aria-label="Choose a decomposition source"></div>
+      <p class="section-footnote composition-footnote">Input, Layers and Split show the original image and extraction layout. Recomposed is a separate editing view: move, rotate or resize foreground layers while the background stays fixed. Your edits are kept when you return to Recomposed. Reset all restores that case's layout.</p>
+      <noscript><p>Enable JavaScript to inspect the extracted layers.</p></noscript>
+    </section>
+
+    <div class="section-band method-band">
+      <section class="section" id="method" aria-labelledby="method-title">
+        <div class="section-heading"><span class="section-kicker">05 / Method</span><h2 id="method-title">Appearance and opacity in the original RGB latent space</h2><p>Transformer LoRA modules and a lightweight alpha branch extend a pretrained RGB generator to RGBA through generative training alone, without explicit RGBA representation pretraining.</p></div>
+        <figure class="method-figure">
+          <button class="figure-button" data-figure="method" aria-label="Enlarge the AlphaAnything method overview"><img src="assets/method.webp" width="2933" height="1253" alt="AlphaAnything architecture: text and optional image conditioning guide a pretrained transformer adapted with LoRA. A lightweight alpha branch embedded in the frozen RGB VAE decoder receives features through unidirectional RGB-to-alpha connections. Only transformer LoRA and the alpha branch are trained, using flow matching and alpha supervision." loading="lazy"><span class="enlarge-badge"><span data-icon="expand"></span>Enlarge</span></button>
+          <figcaption>Alpha supervision shapes the generative latent through the frozen RGB VAE decoder. Unidirectional RGB-to-alpha feature sharing preserves RGB decoding for any fixed latent.</figcaption>
+        </figure>
+        <div class="method-notes">
+          <div><span class="method-number">01</span><h3>Retain RGB decoding</h3><p>The pretrained RGB encoder and decoder stay frozen. Unidirectional RGB-to-alpha connections preserve RGB decoding for any fixed latent.</p></div>
+          <div><span class="method-number">02</span><h3>Learn appearance + opacity</h3><p>Transformer LoRA and the alpha branch are trained jointly with flow matching and alpha supervision in the original RGB latent space, without RGBA reconstruction training.</p></div>
+          <div><span class="method-number">03</span><h3>Supervise alpha directly</h3><p>Endpoint-Aware Alpha Loss (EA Loss) exploits the compositing structure of alpha to jointly supervise exact opacity endpoints, soft transparency, and localized errors.</p></div>
+        </div>
+        <a class="text-link vector-link" href="assets/method.pdf" target="_blank" rel="noopener">View the method figure as a vector PDF <span data-icon="external"></span></a>
+      </section>
+    </div>
+    <section class="section resources-section" id="resources" aria-labelledby="resources-title">
+      <div class="section-heading"><span class="section-kicker">06 / Resources</span><h2 id="resources-title">Explore the work</h2><p>Inspect transparent assets, read the method, and follow the public release.</p></div>
+      <div class="resource-list">
+        <div class="resource-row resource-pending"><span class="resource-icon" data-icon="github"></span><span><strong>Code</strong><small>Inference and training code</small></span><span class="release-label">Coming soon</span></div>
+        <a class="resource-row" href="assets/method.pdf" target="_blank" rel="noopener"><span class="resource-icon" data-icon="workflow"></span><span><strong>Method overview</strong><small>Read the architecture figure as a vector PDF</small></span><span data-icon="external"></span></a>
+        <div class="resource-row resource-pending"><span class="resource-icon" data-icon="paper"></span><span><strong>arXiv preprint</strong><small>The paper link and citation will be added when available</small></span><span class="release-label">Forthcoming</span></div>
+        <div class="resource-row resource-pending"><span class="resource-icon" data-icon="layers"></span><span><strong>Model checkpoints and data</strong><small>Not included in this initial website release</small></span><span class="release-label">Coming soon</span></div>
+      </div>
+      <p class="resources-note">All demonstrations show precomputed results for research and evaluation purposes only. RGBA elements are generated or extracted with AlphaAnything; compositions are manually arranged. Each example identifies its backbone and prompts.</p>
+      <div class="citation-block" aria-labelledby="citation-title">
+        <div class="citation-heading"><h3 id="citation-title">Citation</h3><button class="copy-citation" id="copy-citation" type="button">Copy BibTeX</button></div>
+        <p>The arXiv identifier will be added after the preprint is available.</p>
+        <pre><code id="citation-text">@misc{wang2026alphaanything,
+  title  = {AlphaAnything: Extending Pretrained RGB Generators to RGBA},
+  author = {Qijie Wang and Zhixin Xu and Zhe Li and Haowei Zhu and
+            Honghao Qiao and Bo Peng and Dawei Li and Bin Wang},
+  year   = {2026},
+  url    = {https://wluli.github.io/AlphaAnything/},
+  note   = {Project page; preprint forthcoming}
+}</code></pre>
+        <span id="citation-status" class="sr-only" role="status" aria-live="polite"></span>
+      </div>
+      <p class="contact-line">Contact <a href="mailto:wqj24@mails.tsinghua.edu.cn">Qijie Wang</a>.</p>
+    </section>
+  </main>
+
+  <footer><div class="footer-inner"><a class="footer-brand" href="#top"><span class="wordmark"><span class="wordmark-alpha">Alpha</span><span class="wordmark-red">Any</span><span class="wordmark-green">th</span><span class="wordmark-blue">ing</span></span></a><p>Extending Pretrained RGB Generators to RGBA</p><a href="#top" class="back-to-top">Back to top <span data-icon="arrow-up"></span></a></div></footer>
+
+  <dialog id="image-dialog" class="image-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header"><div><span id="dialog-kicker" class="section-kicker">Text-to-RGBA</span><h2 id="dialog-title">RGBA result</h2></div><button class="close-button" id="dialog-close" aria-label="Close image viewer"><span data-icon="close"></span></button></div>
+    <div class="dialog-content" id="dialog-content">
+      <div class="dialog-visual transparency-surface" id="dialog-surface" data-background="checker"><img id="dialog-image" alt=""></div>
+      <div class="dialog-details" id="dialog-details"><div class="dialog-controls"><div class="segmented" role="group" aria-label="Image viewer display mode"><button data-dialog-mode="rgba" class="active" aria-pressed="true">RGBA</button><button data-dialog-mode="alpha" aria-pressed="false">Alpha</button></div><div class="background-picker" role="group" aria-label="Image viewer background"><button class="swatch checker active" data-bg-group="dialog" data-bg="checker" aria-label="Checkerboard background" aria-pressed="true"></button><button class="swatch white" data-bg-group="dialog" data-bg="white" aria-label="White background" aria-pressed="false"></button><button class="swatch dark" data-bg-group="dialog" data-bg="dark" aria-label="Dark background" aria-pressed="false"></button><button class="swatch blue" data-bg-group="dialog" data-bg="blue" aria-label="Blue background" aria-pressed="false"></button></div></div><span class="prompt-label">Generation prompt</span><p id="dialog-prompt"></p><div class="dialog-meta"><span>Backbone</span><strong id="dialog-model">Qwen-Image</strong></div><div class="dialog-pagination"><button id="previous-example" aria-label="Previous example"><span data-icon="arrow-left"></span></button><span id="dialog-count"></span><button id="next-example" aria-label="Next example"><span data-icon="arrow-right"></span></button></div></div>
+    </div>
+    <div class="dialog-footer"><a id="original-image" class="text-link" href="assets/teaser.webp" target="_blank" rel="noopener">Open full-resolution image <span data-icon="external"></span></a></div>
+  </dialog>
+  <div class="sr-only" id="demo-status" role="status" aria-live="polite"></div>
+  <script src="release.js" defer></script>
+</body>
+</html>
