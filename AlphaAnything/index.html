@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="AlphaAnything">
   <meta property="og:title" content="AlphaAnything: Extending Pretrained RGB Generators to RGBA">
-  <meta property="og:description" content="Appearance and opacity, learned together. Explore text-to-RGBA, image-to-RGBA, and interactive layer compositions.">
+  <meta property="og:description" content="Explore text-to-RGBA, image-to-RGBA, and interactive layer compositions.">
   <meta property="og:url" content="https://wluli.github.io/AlphaAnything/">
   <meta property="og:image" content="https://wluli.github.io/AlphaAnything/assets/teaser.webp">
   <meta name="twitter:card" content="summary_large_image">
@@ -35,7 +35,7 @@
       <a class="brand" href="#top" aria-label="AlphaAnything home"><span class="brand-mark" aria-hidden="true">α</span><span class="wordmark"><span class="wordmark-alpha">Alpha</span><span class="wordmark-red">Any</span><span class="wordmark-green">th</span><span class="wordmark-blue">ing</span></span></a>
       <button class="menu-button" id="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><span data-icon="menu"></span></button>
       <div class="nav-links" id="nav-links">
-        <a href="#abstract">Abstract</a><a href="#i2rgba">Image-to-RGBA</a><a href="#t2rgba">Text-to-RGBA</a><a href="#compositions">Compositions</a><a href="#decompositions">Decompose</a><a href="#method">Method</a><a href="#resources">Resources</a>
+        <a href="#abstract">Abstract</a><a href="#i2rgba">Image-to-RGBA</a><a href="#t2rgba">Text-to-RGBA</a><a href="#compositions">Compositions</a><a href="#decompositions">Decompose</a><a href="#method">Method</a>
       </div>
     </div>
   </nav>
@@ -58,8 +58,6 @@
       <p class="paper-affiliations"><span><sup>1</sup> Tsinghua University</span><span><sup>2</sup> ByteDance</span><span><sup>3</sup> Peking University</span></p>
       <p class="author-notes"><span><sup>*</sup> Equal contribution</span><span><sup>†</sup> Corresponding authors</span></p>
       <p class="author-notes internship-note"><span><sup>‡</sup> Work done during an internship at ByteDance.</span></p>
-      <p class="publication-status">Preprint forthcoming</p>
-      <p class="hero-tagline">Appearance and opacity, learned together.</p>
       <div class="hero-tags"><span>Pretrained RGB backbones</span><span>Generative training only</span><span>Native RGBA output</span></div>
       <div class="hero-actions">
         <a class="button button-primary" href="#i2rgba"><span data-icon="image"></span>Explore demos</a>
@@ -249,30 +247,6 @@
         <a class="text-link vector-link" href="assets/method.pdf" target="_blank" rel="noopener">View the method figure as a vector PDF <span data-icon="external"></span></a>
       </section>
     </div>
-    <section class="section resources-section" id="resources" aria-labelledby="resources-title">
-      <div class="section-heading"><span class="section-kicker">06 / Resources</span><h2 id="resources-title">Explore the work</h2><p>Inspect transparent assets, read the method, and follow the public release.</p></div>
-      <div class="resource-list">
-        <div class="resource-row resource-pending"><span class="resource-icon" data-icon="github"></span><span><strong>Code</strong><small>Inference and training code</small></span><span class="release-label">Coming soon</span></div>
-        <a class="resource-row" href="assets/method.pdf" target="_blank" rel="noopener"><span class="resource-icon" data-icon="workflow"></span><span><strong>Method overview</strong><small>Read the architecture figure as a vector PDF</small></span><span data-icon="external"></span></a>
-        <div class="resource-row resource-pending"><span class="resource-icon" data-icon="paper"></span><span><strong>arXiv preprint</strong><small>The paper link and citation will be added when available</small></span><span class="release-label">Forthcoming</span></div>
-        <div class="resource-row resource-pending"><span class="resource-icon" data-icon="layers"></span><span><strong>Model checkpoints and data</strong><small>Not included in this initial website release</small></span><span class="release-label">Coming soon</span></div>
-      </div>
-      <p class="resources-note">All demonstrations show precomputed results for research and evaluation purposes only. RGBA elements are generated or extracted with AlphaAnything; compositions are manually arranged. Each example identifies its backbone and prompts.</p>
-      <div class="citation-block" aria-labelledby="citation-title">
-        <div class="citation-heading"><h3 id="citation-title">Citation</h3><button class="copy-citation" id="copy-citation" type="button">Copy BibTeX</button></div>
-        <p>The arXiv identifier will be added after the preprint is available.</p>
-        <pre><code id="citation-text">@misc{wang2026alphaanything,
-  title  = {AlphaAnything: Extending Pretrained RGB Generators to RGBA},
-  author = {Qijie Wang and Zhixin Xu and Zhe Li and Haowei Zhu and
-            Honghao Qiao and Bo Peng and Dawei Li and Bin Wang},
-  year   = {2026},
-  url    = {https://wluli.github.io/AlphaAnything/},
-  note   = {Project page; preprint forthcoming}
-}</code></pre>
-        <span id="citation-status" class="sr-only" role="status" aria-live="polite"></span>
-      </div>
-      <p class="contact-line">Contact <a href="mailto:wqj24@mails.tsinghua.edu.cn">Qijie Wang</a>.</p>
-    </section>
   </main>
 
   <footer><div class="footer-inner"><a class="footer-brand" href="#top"><span class="wordmark"><span class="wordmark-alpha">Alpha</span><span class="wordmark-red">Any</span><span class="wordmark-green">th</span><span class="wordmark-blue">ing</span></span></a><p>Extending Pretrained RGB Generators to RGBA</p><a href="#top" class="back-to-top">Back to top <span data-icon="arrow-up"></span></a></div></footer>
@@ -286,6 +260,5 @@
     <div class="dialog-footer"><a id="original-image" class="text-link" href="assets/teaser.webp" target="_blank" rel="noopener">Open full-resolution image <span data-icon="external"></span></a></div>
   </dialog>
   <div class="sr-only" id="demo-status" role="status" aria-live="polite"></div>
-  <script src="release.js" defer></script>
 </body>
 </html>

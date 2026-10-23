@@ -8,7 +8,7 @@ This repository hosts project pages only. There is no personal homepage at the r
 - [Research repository](https://github.com/WLuLi/AlphaAnything)
 - Website files and demonstration assets: [AlphaAnything/](AlphaAnything/)
 
-The website displays precomputed research results. Inference and training code, model checkpoints, and data are marked **Coming soon**.
+The website displays precomputed research results.
 
 ## Hosting
 
